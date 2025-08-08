@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:range_visualizer_app/model/range_model.dart';
+import 'package:range_visualizer_app/model/range_segment.dart';
 import 'package:range_visualizer_app/util/color.dart';
+import 'package:range_visualizer_app/util/dimension.dart';
 
 class RangeBar extends StatelessWidget {
   final List<RangeModel> ranges;
@@ -8,44 +10,88 @@ class RangeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(4.0),
-      child: CustomPaint(
-        painter: _RangeBarPainter(ranges: ranges),
-        size: const Size(double.infinity, 32),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (ranges.isEmpty) return const SizedBox.shrink();
+
+        final segments = DimensionUtils.computeSegments(
+          ranges,
+          constraints.maxWidth,
+        );
+
+        List<Widget> topLabels = [];
+        List<Widget> bottomLabels = [];
+        buildLabels(segments, context, topLabels, bottomLabels);
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: topLabels),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4.0),
+              child: CustomPaint(
+                painter: _RangeBarPainter(segments: segments),
+                size: Size(constraints.maxWidth, 32),
+              ),
+            ),
+            Row(children: bottomLabels),
+          ],
+        );
+      },
     );
+  }
+
+  void buildLabels(
+    List<RangeSegment> segments,
+    BuildContext context,
+    List<Widget> topLabels,
+    List<Widget> bottomLabels,
+  ) {
+    for (int i = 0; i < segments.length; i++) {
+      final segment = segments[i];
+      final label = SizedBox(
+        width: segment.width,
+        child: Text(
+          segment.start.toString(),
+          textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+      );
+
+      if (i % 2 == 0) {
+        topLabels.add(label);
+        bottomLabels.add(SizedBox(width: segment.width));
+      } else {
+        topLabels.add(SizedBox(width: segment.width));
+        bottomLabels.add(label);
+      }
+    }
   }
 }
 
 class _RangeBarPainter extends CustomPainter {
-  final List<RangeModel> ranges;
+  final List<RangeSegment> segments;
 
-  _RangeBarPainter({required this.ranges});
+  _RangeBarPainter({required this.segments});
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (ranges.isEmpty) return;
+    if (segments.isEmpty) return;
 
     final paint = Paint()..style = PaintingStyle.fill;
 
-    final rMin = ranges.first.start;
-    final rMax = ranges.last.end;
-    final totalRange = rMax - rMin + 1;
-
     double startX = 0;
 
-    for (final range in ranges) {
-      final rangeWidth = range.end - range.start + 1;
-      final widthFraction = rangeWidth / totalRange;
-      final barWidth = widthFraction * size.width;
-
-      paint.color = ColorUtils.hex2Color(range.color);
-      canvas.drawRect(Rect.fromLTWH(startX, 0, barWidth, size.height), paint);
-
-      startX += barWidth;
+    for (final segment in segments) {
+      paint.color = ColorUtils.hex2Color(segment.color);
+      canvas.drawRect(
+        Rect.fromLTWH(startX, 0, segment.width, size.height),
+        paint,
+      );
+      startX += segment.width;
     }
-
   }
 
   @override
