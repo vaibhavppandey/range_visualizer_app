@@ -7,7 +7,7 @@ import 'package:range_visualizer_app/model/range_model.dart';
 class APIService {
   static final _baseUrl = Uri.parse(ApiConstants.baseUrl);
 
-  Future<List<RangeModel>> getRanges() async {
+  static Future<List<RangeModel>> getRanges() async {
     final client = HttpClient();
     try {
       final req = await client.getUrl(_baseUrl);
