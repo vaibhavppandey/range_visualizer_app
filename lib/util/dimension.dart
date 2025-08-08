@@ -39,22 +39,25 @@ class DimensionUtils {
     String color = '#000000';
 
     if (value < rMin) {
-      meaning = 'Underflow';
-      dx = 0;
+      meaning = 'Too low';
+      dx = maxWidth / 2;
     } else if (value > rMax) {
-      meaning = 'Overflow';
-      dx = maxWidth;
+      meaning = 'Too high';
+      dx = maxWidth / 2;
     } else {
       for (final range in ranges) {
         final beforeWidth = ranges
             .takeWhile((r) => r.end < range.start)
-            .fold(0.0, (sum, r) =>
-                sum + ((r.end - r.start + 1) / totalRange) * maxWidth);
+            .fold(
+              0.0,
+              (sum, r) => sum + ((r.end - r.start + 1) / totalRange) * maxWidth,
+            );
 
         if (value >= range.start && value <= range.end) {
           final relative =
               (value - range.start) / (range.end - range.start + 1);
-          dx = beforeWidth +
+          dx =
+              beforeWidth +
               relative *
                   ((range.end - range.start + 1) / totalRange) *
                   maxWidth;

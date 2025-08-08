@@ -11,9 +11,8 @@ class ErrorRetryWidget extends StatelessWidget {
       children: <Widget>[
         Text(
           "Something went wrong, try again",
-          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
-            color: CupertinoColors.destructiveRed,
-          ),
+          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
+              .copyWith(color: CupertinoColors.destructiveRed),
         ),
         const SizedBox(height: 8.0),
         CupertinoButton(

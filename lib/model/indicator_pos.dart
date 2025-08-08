@@ -3,9 +3,5 @@ class IndicatorPos {
   final String label;
   final String color;
 
-  IndicatorPos({
-    required this.dx,
-    required this.label,
-    required this.color,
-  });
+  IndicatorPos({required this.dx, required this.label, required this.color});
 }

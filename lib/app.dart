@@ -8,6 +8,9 @@ class RangeVizualizerApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(title: 'Range Visualizer', home: HomePage());
+    return CupertinoApp(
+      title: 'Range Visualizer',
+      routes: {'/': (_) => const HomePage()},
+    );
   }
 }

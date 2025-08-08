@@ -28,9 +28,14 @@ class _InputFieldState extends State<InputField> {
         const SizedBox(width: 8.0),
         SizedBox(
           width: 48.0,
-          child: CupertinoButton.filled(
-            onPressed: () => Notifiers.input.value = input,
-            child: const Icon(CupertinoIcons.arrow_right),
+          child: Center(
+            child: CupertinoButton.filled(
+              onPressed: () {
+                FocusScope.of(context).unfocus(); // keyboard hideout
+                Notifiers.input.value = input;
+              },
+              child: const Icon(CupertinoIcons.arrow_right, size: 10),
+            ),
           ),
         ),
       ],

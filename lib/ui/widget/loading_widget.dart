@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({super.key});
@@ -11,9 +10,8 @@ class LoadingWidget extends StatelessWidget {
       children: <Widget>[
         Text(
           "Fetching Ranges",
-          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
-            color: CupertinoColors.extraLightBackgroundGray,
-          ),
+          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle
+              .copyWith(color: CupertinoColors.extraLightBackgroundGray),
         ),
         const SizedBox(height: 8.0),
         CupertinoActivityIndicator(

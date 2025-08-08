@@ -36,16 +36,21 @@ class IndicatorWidget extends StatelessWidget {
                   children: [
                     Icon(
                       CupertinoIcons.arrow_up,
-                      size: 15,
+                      size: 16,
                       color: ColorUtils.hex2Color(pos.color),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       pos.label,
-                      style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                        fontSize: 10,
-                        color: CupertinoColors.extraLightBackgroundGray,
-                      ),
+                      style: CupertinoTheme.of(context).textTheme.textStyle
+                          .copyWith(
+                            fontSize: 12,
+                            color:
+                                (pos.label == 'Underflow' ||
+                                    pos.label == 'Overflow')
+                                ? CupertinoColors.systemRed
+                                : CupertinoColors.extraLightBackgroundGray,
+                          ),
                     ),
                   ],
                 ),
