@@ -4,7 +4,7 @@ import 'package:range_visualizer_app/model/range_model.dart';
 class Notifiers {
   Notifiers._();
 
-  static final ValueNotifier<String> input = ValueNotifier<String>('');
+  static final ValueNotifier<int?> input = ValueNotifier<int?>(null);
   static final ValueNotifier<List<RangeModel>> ranges =
       ValueNotifier<List<RangeModel>>([]);
   static final ValueNotifier<bool> loading = ValueNotifier<bool>(true);

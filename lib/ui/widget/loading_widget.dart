@@ -11,14 +11,14 @@ class LoadingWidget extends StatelessWidget {
       children: <Widget>[
         Text(
           "Fetching Ranges",
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onPrimary,
+          style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
+            color: CupertinoColors.extraLightBackgroundGray,
           ),
         ),
         const SizedBox(height: 8.0),
         CupertinoActivityIndicator(
-          color: Theme.of(context).colorScheme.onPrimary,
-          radius: 20.0,
+          color: CupertinoColors.inactiveGray,
+          radius: 12.0,
         ),
       ],
     );

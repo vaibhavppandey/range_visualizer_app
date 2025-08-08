@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:range_visualizer_app/model/range_model.dart';
 import 'package:range_visualizer_app/model/range_segment.dart';
 import 'package:range_visualizer_app/util/color.dart';
@@ -54,8 +54,9 @@ class RangeBar extends StatelessWidget {
         child: Text(
           segment.start.toString(),
           textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: Theme.of(context).colorScheme.onPrimary,
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+            fontSize: 10,
+            color: CupertinoColors.extraLightBackgroundGray,
           ),
         ),
       );
